@@ -60,53 +60,6 @@ public class LinearReg {
         return minIndex;
     }
 
-    public static LinearReg getBestLine2(Point[] points, int num)
-    {
-        double a = 1;
-        double px = 0, py = 0;
-        for (int i = 0; i < points.length; i++) {
-            px += points[i].getX();
-            py += points[i].getX();
-        }
-        px /= points.length;
-        py /= points.length;
-        double m = (points[points.length-1].getY() - points[0].getY())/(points[points.length-1].getX() - points[0].getX());
-        double b = -m * px + py;
-        LinearReg line = new LinearReg(m,b);
-        LinearReg tempLine = new LinearReg(line.getM(), line.getB());
-        double cost = costFunction(line,points);
-        double[] costs = {cost, 0, 0};
-        int minIndex;
-        double cost1, cost2;
-        for (int i = 0; i < num; i++)
-        {
-            tempLine.setM(line.getM() + a);
-            tempLine.setB(-tempLine.getM() * px + py);
-            cost1 = costFunction(tempLine, points);
-            costs[1] = cost1;
-            tempLine.setM(line.getM() - a);
-            tempLine.setB(-tempLine.getM() * px + py);
-            cost2 = costFunction(tempLine, points);
-            costs[2] = cost2;
-            minIndex = minCostIndex(costs);
-            switch (minIndex)
-            {
-                case 0:
-                    a /= 10;
-                    break;
-                case 1:
-                    line.setM(line.getM() + a);
-                    line.setB(-line.getM() * px + py);
-                    break;
-                case 2:
-                    line.setM(line.getM() - a);
-                    line.setB(-line.getM() * px + py);
-                    break;
-            }
-        }
-        return line;
-    }
-
     public static LinearReg getBestLine(Point[] points, int num)
     {
 
