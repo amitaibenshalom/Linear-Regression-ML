@@ -68,7 +68,7 @@ public class LinearReg {
                 points[0].getY() - points[0].getX()*((points[points.length-1].getY() - points[0].getY())/(points[points.length-1].getX() - points[0].getX())));
         LinearReg tempLine = new LinearReg(line.getM(), line.getB());
         double cost = costFunction(line, points);
-        double a = 0.001;
+        double a = 0.0001;
         double[] costs = {cost, 0, 0, 0, 0};
         int minIndex;
         double cost1, cost2, cost3, cost4;
@@ -92,19 +92,23 @@ public class LinearReg {
             switch (minIndex)
             {
                 case 0:
-                    a += 0.001;
+                    a += 0.0001;
                     break;
                 case 1:
                     line.setM(line.getM() + a);
+                    a = 0.0001;
                     break;
                 case 2:
                     line.setM(line.getM() - a);
+                    a = 0.0001;
                     break;
                 case 3:
                     line.setB(line.getB() + a);
+                    a = 0.0001;
                     break;
                 case 4:
                     line.setB(line.getB() - a);
+                    a = 0.0001;
                     break;
             }
         }
